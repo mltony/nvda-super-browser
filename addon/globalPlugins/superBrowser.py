@@ -39,7 +39,7 @@ backup = None
 
 class FakeNVDAObject:
     """This class is a wrapper around NVDA object class.
-    It forwards all the method calls and attributes to the object it wraps, except for .setFocus(), which it simply ignores."""
+    It forwards all the method calls and attributes to the object it wraps, except for .setFocus() and .scrollIntoView(), which it simply ignores."""
     def __init__(self, obj):
         self.obj = obj
 
@@ -47,8 +47,8 @@ class FakeNVDAObject:
         pass
 
     def __getattr__(self, name):
-        if name == "setFocus":
-            return self.setFocus
+        if name in ["setFocus", "scrollIntoView"]:
+            return lambda : None
         func = getattr(self.obj, name)
         if type(func) == types.MethodType:
             return  lambda *args, **kwargs: func( *args, **kwargs)
@@ -62,6 +62,7 @@ def intercept():
             if hackLevel >= 1:
                 nonFocusableInfo = info.copy()
                 nonFocusableInfo.focusableNVDAObjectAtStart = FakeNVDAObject(nonFocusableInfo.focusableNVDAObjectAtStart)
+                nonFocusableInfo.NVDAObjectAtStart = FakeNVDAObject(nonFocusableInfo.NVDAObjectAtStart)
                 info = nonFocusableInfo
             return targetFunc(self, info, reason)
         return wrapperFunc
