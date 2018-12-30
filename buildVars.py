@@ -19,7 +19,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description" : _("""SuperBrowser is an add-on for NVDA that provides workarounds for some browse mode bugs in NVDA."""),
 	# version
-	"addon_version" : "0.1dev",
+	"addon_version" : "0.2dev",
 	# Author(s)
 	"addon_author" : u"Tony Malykh <anton.malykh@gmail.com>",
 	# URL for the add-on documentation support
